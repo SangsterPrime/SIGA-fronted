@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthTemplate from '../components/templates/AuthTemplate';
-import { GOOGLE_LOGIN_URL } from '../lib/api';
+import { GOOGLE_LOGIN_URL } from '../config/api';
 import { useAuth } from '../context/AuthContext';
 
 function GoogleGlyph() {

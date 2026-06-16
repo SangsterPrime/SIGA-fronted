@@ -30,8 +30,17 @@ pnpm preview  # previsualizar el build
 Copia `.env.example` a `.env.local`:
 
 ```
-VITE_API_BASE_URL=http://localhost:8080   # URL del backend SIGA
+VITE_API_URL=http://localhost:8080   # URL local del backend SIGA
 ```
+
+En producción, configura esta variable en Vercel:
+
+```
+VITE_API_URL=https://siga-backend-cs0t.onrender.com
+```
+
+Después de cambiar variables de entorno en Vercel, redeploya el proyecto para
+que el build tome el nuevo valor.
 
 ## Rutas
 
@@ -48,7 +57,7 @@ Login basado en sesión (cookie) del backend:
 
 1. `/ingresar` → el botón redirige a `GET {API}/oauth2/authorization/google`.
 2. Google autentica y el backend redirige de vuelta a `http://localhost:5173`.
-3. `AuthProvider` consulta `GET {API}/api/me` con `credentials: 'include'`.
+3. `AuthProvider` consulta `GET {VITE_API_URL}/api/me` con `credentials: 'include'`.
 4. Las rutas protegidas usan `<ProtectedRoute>`.
 
 ## Estructura (Atomic Design)
