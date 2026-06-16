@@ -1,0 +1,27 @@
+/* Estilos globales: tokens de marca, base del documento y acentos tipográficos.
+   Los estilos específicos de componentes viven en styles/<nivel>/<componente>.css */
+@import "./molecules/typewriter.css";
+@import "./organisms/spotlight.css";
+
+:root {
+  --font-heading: 'HelveticaNowDisplay-Medium', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'HelveticaNowDisplayW01-Rg', 'Helvetica Neue', Arial, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Acento display/wordmark de la sección spotlight (Lithos → SIGA). */
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}

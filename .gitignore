@@ -1,0 +1,48 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+
+# Variables de entorno — NO versionar secretos (se conserva solo .env.example)
+.env
+.env.*
+*.local
+!.env.example
+
+# Credenciales y archivos sensibles
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+id_rsa*
+secrets.*
+credentials.*
+*.local.json
+
+# Claude Code — configuración local de la máquina (no compartir)
+.claude/settings.local.json
+.claude/skills/
+
+# Configuración de herramientas (MCP / skills) — no compartir
+.mcp.json
+skills-lock.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,3 @@
+/* Punto de entrada de estilos: Tailwind v4 + estilos globales del proyecto. */
+@import "tailwindcss";
+@import "./styles/global.css";
