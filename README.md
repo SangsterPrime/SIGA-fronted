@@ -50,18 +50,31 @@ y `/logout`. De este modo la cookie de sesión OAuth2 viaja como *first-party* y
 |--------------|--------------------------------------------------------------------|
 | `/`          | Landing inmersiva: video de fondo con *scrub* por mouse, intro A.R.I.A (typewriter) y píldoras de acción. |
 | `/explorar`  | Sección *spotlight*: revela una segunda imagen con una máscara circular que sigue al cursor. |
-| `/ingresar`  | Login con Google (delegado al backend).                            |
+| `/ingresar`  | Login con animación de personajes. Dos métodos: Google y correo/contraseña. |
 | `/inicio`    | Panel del usuario autenticado (protegido). Muestra datos de `/api/me`. |
 
 ## Autenticación
 
-Login basado en sesión (cookie) del backend:
+Login basado en **sesión (cookie)** del backend. Hay **dos métodos reales** que terminan
+en la misma sesión (`JSESSIONID`), así `GET /api/me` funciona igual para ambos:
 
-1. `/ingresar` → el botón redirige a `GET {API_URL}/oauth2/authorization/google`
+**1. Google OAuth2**
+
+1. `/ingresar` → "Continuar con Google" redirige a `GET {API_URL}/oauth2/authorization/google`
    (en producción, ruta relativa `/oauth2/...` proxyeada por Vercel hacia Render).
 2. Google autentica y el backend redirige de vuelta al frontend.
-3. `AuthProvider` consulta `GET {API_URL}/api/me` con `credentials: 'include'`.
-4. Las rutas protegidas usan `<ProtectedRoute>`.
+
+**2. Registro / login manual** (correo + contraseña)
+
+- `POST {API_URL}/auth/register` — `{ name, email, password, role, employeeCode? }`.
+  El rol `FUNCIONARIO` exige un código válido (`EMPLOYEE_REGISTER_CODE` en el backend);
+  `ADMINISTRADOR` no es auto-registrable. Tras crear la cuenta se muestra una bienvenida.
+- `POST {API_URL}/auth/login` — `{ email, password }`.
+- Las contraseñas se guardan cifradas con BCrypt en el backend (nunca en texto plano).
+
+En ambos casos, `AuthProvider` consulta `GET {API_URL}/api/me` con `credentials: 'include'`
+y las rutas protegidas usan `<ProtectedRoute>`. Los `fetch` van con rutas relativas
+(proxy de `vercel.json` para `/api`, `/auth`, `/oauth2`, `/login/oauth2`, `/actuator`, `/logout`).
 
 ## Estructura (Atomic Design)
 

@@ -1,4 +1,4 @@
-/** Etiqueta introductoria desenfocada (dos líneas) sobre el typewriter. */
+/** Etiqueta introductoria (dos líneas) sobre el typewriter. */
 export default function IntroLabel() {
   return (
     <div
@@ -7,9 +7,8 @@ export default function IntroLabel() {
         fontSize: 'clamp(18px, 4vw, 26px)',
         lineHeight: 1.3,
         fontWeight: 400,
-        color: '#000',
-        // Enfoque suave (no totalmente borroso) + halo para que se entienda.
-        filter: 'blur(1.5px)',
+        // Texto nítido pero de menor énfasis que el typewriter (sin desenfoque).
+        color: 'rgba(0,0,0,0.78)',
         textShadow: '0 1px 12px rgba(255,255,255,0.9)',
       }}
     >

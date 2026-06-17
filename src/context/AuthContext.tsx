@@ -12,6 +12,7 @@ interface AuthState {
   user: Usuario | null;
   loading: boolean;
   refresh: () => Promise<void>;
+  setUser: (user: Usuario) => void;
   signOut: () => Promise<void>;
 }
 
@@ -48,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, refresh, signOut }}>
+    <AuthContext.Provider value={{ user, loading, refresh, setUser, signOut }}>
       {children}
     </AuthContext.Provider>
   );

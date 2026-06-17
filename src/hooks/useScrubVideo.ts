@@ -38,6 +38,25 @@ export function useScrubVideo() {
     }
   }, []);
 
+  // Pinta el primer frame apenas carga el video. En móvil un <video> que nunca se
+  // reproduce suele quedar en negro hasta que hay interacción; reproducir y pausar de
+  // inmediato (está `muted`) fuerza el render del primer frame sin avanzar la animación.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const prime = () => {
+      const p = v.play();
+      if (p && typeof p.then === 'function') {
+        p.then(() => v.pause()).catch(() => {
+          /* Sin gesto del usuario: el navegador lo bloquea; queda en el frame 0. */
+        });
+      }
+    };
+    if (v.readyState >= 2) prime();
+    else v.addEventListener('loadeddata', prime, { once: true });
+    return () => v.removeEventListener('loadeddata', prime);
+  }, []);
+
   useEffect(() => {
     const apply = (clientX: number) => {
       const v = videoRef.current;

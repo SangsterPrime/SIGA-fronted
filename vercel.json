@@ -18,6 +18,10 @@
       "destination": "https://siga-backend-cs0t.onrender.com/actuator/:path*"
     },
     {
+      "source": "/auth/:path*",
+      "destination": "https://siga-backend-cs0t.onrender.com/auth/:path*"
+    },
+    {
       "source": "/logout",
       "destination": "https://siga-backend-cs0t.onrender.com/logout"
     },
