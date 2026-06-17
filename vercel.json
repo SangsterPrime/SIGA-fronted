@@ -2,6 +2,26 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://siga-backend-cs0t.onrender.com/api/:path*"
+    },
+    {
+      "source": "/oauth2/:path*",
+      "destination": "https://siga-backend-cs0t.onrender.com/oauth2/:path*"
+    },
+    {
+      "source": "/login/oauth2/:path*",
+      "destination": "https://siga-backend-cs0t.onrender.com/login/oauth2/:path*"
+    },
+    {
+      "source": "/actuator/:path*",
+      "destination": "https://siga-backend-cs0t.onrender.com/actuator/:path*"
+    },
+    {
+      "source": "/logout",
+      "destination": "https://siga-backend-cs0t.onrender.com/logout"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

@@ -33,14 +33,16 @@ Copia `.env.example` a `.env.local`:
 VITE_API_URL=http://localhost:8080   # URL local del backend SIGA
 ```
 
-En producción, configura esta variable en Vercel:
+En producción **no** se define `VITE_API_URL`: debe quedar vacía o eliminada en
+Vercel. Así `API_URL` queda en `''` y el navegador consume rutas relativas del
+mismo dominio (`siga-fronted.vercel.app`). Los *rewrites* de `vercel.json` hacen
+de proxy hacia Render para `/api/*`, `/oauth2/*`, `/login/oauth2/*`, `/actuator/*`
+y `/logout`. De este modo la cookie de sesión OAuth2 viaja como *first-party* y
+`GET /api/me` deja de responder 401.
 
-```
-VITE_API_URL=https://siga-backend-cs0t.onrender.com
-```
-
-Después de cambiar variables de entorno en Vercel, redeploya el proyecto para
-que el build tome el nuevo valor.
+> Si `VITE_API_URL` sigue apuntando a Render en Vercel, el proxy se omite y vuelve
+> el problema de sesión. Tras cambiar variables de entorno en Vercel, redeploya
+> para que el build tome el nuevo valor.
 
 ## Rutas
 
@@ -55,9 +57,10 @@ que el build tome el nuevo valor.
 
 Login basado en sesión (cookie) del backend:
 
-1. `/ingresar` → el botón redirige a `GET {API}/oauth2/authorization/google`.
-2. Google autentica y el backend redirige de vuelta a `http://localhost:5173`.
-3. `AuthProvider` consulta `GET {VITE_API_URL}/api/me` con `credentials: 'include'`.
+1. `/ingresar` → el botón redirige a `GET {API_URL}/oauth2/authorization/google`
+   (en producción, ruta relativa `/oauth2/...` proxyeada por Vercel hacia Render).
+2. Google autentica y el backend redirige de vuelta al frontend.
+3. `AuthProvider` consulta `GET {API_URL}/api/me` con `credentials: 'include'`.
 4. Las rutas protegidas usan `<ProtectedRoute>`.
 
 ## Estructura (Atomic Design)
